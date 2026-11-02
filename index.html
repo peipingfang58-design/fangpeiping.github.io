@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电商视觉设计作品集 · PORTFOLIO 2026</title>
+<style>
+:root{
+  --bg:#0c0c0e; --bg2:#131316; --ink:#f4f2ec; --mut:#98958c;
+  --acc:#d9ff3d; --acc2:#ff6a3d; --line:#26262b;
+  --disp:'Arial Black','Impact','Microsoft YaHei',sans-serif;
+  --cn:'Microsoft YaHei','PingFang SC',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--cn);overflow-x:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+img{display:block}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--acc);color:#111}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#0c0c0e}
+::-webkit-scrollbar-thumb{background:#2c2c32;border-radius:5px}
+.noise{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- topbar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+ padding:14px 28px;border-bottom:1px solid var(--line);background:rgba(12,12,14,.82);backdrop-filter:blur(12px)}
+.brand{font-family:var(--disp);font-size:14px;letter-spacing:.12em}
+.brand em{color:var(--acc);font-style:normal}
+.topnav{display:flex;gap:22px;font-size:13px;color:var(--mut)}
+.topnav a{transition:color .2s}
+.topnav a:hover{color:var(--acc)}
+#editEntry{border:1px solid var(--line);background:transparent;color:var(--mut);padding:7px 16px;border-radius:99px;
+ font-size:13px;cursor:pointer;transition:.2s;font-family:var(--cn)}
+#editEntry:hover{border-color:var(--acc);color:var(--acc)}
+@media(max-width:760px){.topnav{display:none}}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;
+ padding:120px 6vw 60px;background:
+  linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+ background-size:72px 72px}
+.kicker{font-size:13px;letter-spacing:.35em;color:var(--acc);margin-bottom:26px}
+.hero h1{font-family:var(--disp);font-weight:900;font-size:clamp(58px,11.5vw,168px);line-height:.98;letter-spacing:.01em}
+.hero h1 .l2{display:block;color:transparent;-webkit-text-stroke:2px var(--ink)}
+.hero .name{margin-top:30px;font-size:15px;letter-spacing:.18em;color:var(--acc)}
+.hero .sub{margin-top:18px;font-size:clamp(13.5px,1.5vw,17px);color:var(--mut);max-width:860px;line-height:2.05}
+.hero .sub b{color:var(--ink);font-weight:600}
+
+/* ---------- profile ---------- */
+.profile{padding:86px 6vw 10px;border-bottom:1px solid var(--line)}
+.pfwrap{display:grid;grid-template-columns:280px 1fr;gap:60px;align-items:start}
+.pflabel{font-family:var(--disp);font-size:12px;letter-spacing:.3em;color:var(--acc)}
+.pflabel span{display:block;font-size:clamp(28px,3.2vw,40px);color:var(--ink);letter-spacing:.04em;margin-top:12px;font-weight:900}
+.pfbio{font-size:clamp(14px,1.6vw,17.5px);line-height:2.15;color:#c9c6bd}
+.pfbio b{color:var(--ink)}
+.pfchain{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.pfstep{border:1px solid var(--line);padding:20px 18px;position:relative;transition:.25s}
+.pfstep:hover{border-color:var(--acc);background:#d9ff3d0a}
+.pfstep .i{font-family:var(--disp);font-size:11px;color:var(--acc);letter-spacing:.2em}
+.pfstep .t{font-size:15px;font-weight:700;margin-top:10px}
+.pfstep .d{font-size:12px;color:var(--mut);margin-top:8px;line-height:1.7}
+@media(max-width:860px){.pfwrap{grid-template-columns:1fr;gap:26px}.pfchain{grid-template-columns:repeat(2,1fr)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:56px}
+.stat{padding:22px 18px 0;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat .n{font-family:var(--disp);font-size:clamp(26px,3.4vw,46px);color:var(--acc)}
+.stat .t{font-size:12.5px;color:var(--mut);margin-top:8px;letter-spacing:.1em}
+.scrollcue{position:absolute;bottom:26px;left:6vw;font-size:11px;letter-spacing:.3em;color:var(--mut);animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(3){border-left:none;padding-left:0}}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;background:var(--bg2)}
+.mtrack{display:flex;gap:0;white-space:nowrap;animation:mq 28s linear infinite;width:max-content}
+.mtrack span{font-family:var(--disp);font-size:20px;letter-spacing:.14em;padding:0 26px;color:var(--ink)}
+.mtrack span:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--mut)}
+.mtrack i{color:var(--acc);font-style:normal;padding:0 4px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- chapter ---------- */
+.chapter{padding:110px 6vw 30px}
+.chhead{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:34px}
+.chno{font-family:var(--disp);font-size:clamp(70px,9vw,130px);line-height:.85;color:transparent;-webkit-text-stroke:2px var(--acc)}
+.chmeta h2{font-size:clamp(26px,3.4vw,44px);font-weight:900;letter-spacing:.04em}
+.chmeta .en{font-family:var(--disp);font-size:13px;letter-spacing:.3em;color:var(--acc);margin-top:10px}
+.chintro{margin-left:auto;max-width:420px;color:var(--mut);font-size:14px;line-height:1.9}
+@media(max-width:760px){.chintro{margin-left:0}}
+
+/* ---------- grid & cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:34px 26px;padding:44px 0 30px}
+.card{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;cursor:zoom-in;position:relative}
+.card.in{opacity:1;transform:none}
+.cardno{font-family:var(--disp);font-size:13px;color:var(--acc);letter-spacing:.2em;margin-bottom:10px}
+.ph{position:relative;overflow:hidden;border:1px solid var(--line);background:var(--bg2);aspect-ratio:1920/2565}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.card:hover .ph img{transform:scale(1.025)}
+.card:hover .ph{border-color:var(--acc)}
+.meta{padding:16px 2px 0}
+.meta h3{font-size:16.5px;font-weight:700;letter-spacing:.03em}
+.meta p{font-size:13px;color:var(--mut);margin-top:7px;line-height:1.75}
+.tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.tags span{font-size:11px;color:var(--mut);border:1px solid var(--line);padding:4px 10px;border-radius:99px;letter-spacing:.06em}
+
+/* edit controls on cards */
+.card .ops{position:absolute;top:38px;right:10px;display:none;gap:8px;z-index:5}
+.editing .card .ops{display:flex}
+.card .ops button{border:none;background:var(--acc);color:#111;font-size:12px;font-weight:700;padding:6px 12px;border-radius:99px;cursor:pointer;font-family:var(--cn)}
+.card .ops button.ghost{background:#000c;color:var(--ink);border:1px solid var(--line)}
+.card .ops button:hover{filter:brightness(1.1)}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:90px;padding:100px 6vw 46px}
+footer .big{font-family:var(--disp);font-size:clamp(46px,8vw,120px);line-height:1;color:transparent;-webkit-text-stroke:2px var(--ink)}
+footer .big em{color:var(--acc);-webkit-text-stroke:0;font-style:normal}
+.contact{display:flex;gap:60px;flex-wrap:wrap;margin-top:48px}
+.contact .item .k{font-size:12px;color:var(--mut);letter-spacing:.2em;margin-bottom:10px}
+.contact .item .v{font-size:17px;font-weight:600}
+.contact .item.qr .qrbox{position:relative;width:128px}
+.contact .item.qr img{width:128px;height:128px;border-radius:10px;background:#fff;padding:6px;box-sizing:border-box}
+.contact .item.qr .qrb{display:none;position:absolute;inset:auto 0 6px 0;margin:0 auto;border:none;background:#000c;color:var(--acc);font-size:11px;padding:5px 8px;border-radius:6px;cursor:pointer;font-family:var(--cn)}
+.editing .contact .item.qr .qrb{display:block}
+.credit{margin-top:70px;display:flex;justify-content:space-between;color:#5b5b60;font-size:12px;letter-spacing:.08em;flex-wrap:wrap;gap:10px}
+
+/* ---------- lightbox ---------- */
+#lb{position:fixed;inset:0;z-index:80;background:rgba(8,8,10,.96);display:none}
+#lb.open{display:block}
+.lb-scroll{position:absolute;inset:0;overflow-y:auto;padding:70px 20px 90px;display:flex;justify-content:center}
+.lb-scroll img{width:min(94vw,1180px);height:auto;border:1px solid var(--line)}
+#lb.actual .lb-scroll{justify-content:flex-start;padding:70px 40px 90px}
+#lb.actual .lb-scroll img{width:auto;max-width:none;border:none}
+.lbbar{position:fixed;top:18px;left:20px;z-index:82;display:flex;gap:10px;align-items:center}
+.lbbar button{background:#000a;border:1px solid var(--line);color:var(--mut);font-size:12.5px;padding:8px 15px;border-radius:99px;cursor:pointer;font-family:var(--cn);transition:.2s}
+.lbbar button:hover,#lb.actual .lbbar button{border-color:var(--acc);color:var(--acc)}
+#lb .x,#lb .pv,#lb .nx{position:fixed;z-index:82;background:#000a;border:1px solid var(--line);color:var(--ink);
+ width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;transition:.2s}
+#lb .x{top:16px;right:20px}#lb .pv{top:50%;left:18px;transform:translateY(-50%)}#lb .nx{top:50%;right:18px;transform:translateY(-50%)}
+#lb .x:hover,#lb .pv:hover,#lb .nx:hover{border-color:var(--acc);color:var(--acc)}
+.lb-cap{position:fixed;bottom:0;left:0;right:0;padding:14px 24px;background:linear-gradient(transparent,#000c);
+ font-size:13px;color:var(--mut);text-align:center}
+.lb-cap b{color:var(--ink)}
+
+/* ---------- toolbar / modal / toast ---------- */
+.toolbar{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:70;display:none;gap:8px;
+ background:#111116;border:1px solid var(--acc);border-radius:99px;padding:9px 12px;box-shadow:0 10px 40px #000a;flex-wrap:wrap;justify-content:center}
+.editing .toolbar{display:flex}
+.toolbar button{border:none;background:transparent;color:var(--ink);font-size:13px;padding:7px 13px;border-radius:99px;cursor:pointer;font-family:var(--cn);white-space:nowrap}
+.toolbar button:hover{background:#ffffff14}
+.toolbar button.warn{color:var(--acc2)}
+.toolbar .lead{color:var(--acc);font-weight:700}
+.modal{position:fixed;inset:0;z-index:90;background:#000b;display:none;align-items:center;justify-content:center}
+.modal.open{display:flex}
+.mbox{background:#131318;border:1px solid var(--line);border-radius:14px;padding:34px;width:min(92vw,380px)}
+.mbox h4{font-size:16px;margin-bottom:8px}
+.mbox p{font-size:12.5px;color:var(--mut);line-height:1.7;margin-bottom:18px}
+.mbox input{width:100%;background:#0c0c0e;border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:8px;font-size:14px;outline:none}
+.mbox input:focus{border-color:var(--acc)}
+.mrow{display:flex;gap:10px;margin-top:18px}
+.mrow button{flex:1;padding:11px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;font-family:var(--cn)}
+.mrow button.ok{background:var(--acc);color:#111;border-color:var(--acc);font-weight:700}
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);z-index:95;background:var(--acc);color:#111;
+ font-size:13px;font-weight:700;padding:11px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:.3s}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* edit mode affordances */
+.editing [contenteditable]{outline:none;border-radius:4px}
+.editing [contenteditable]:hover{background:#d9ff3d14}
+.editing [contenteditable]:focus{outline:2px dashed var(--acc);outline-offset:4px}
+
+/* ---------- print / PDF ---------- */
+@page{size:A4;margin:9mm}
+@media print{
+ body{background:var(--bg)}
+ .topbar,.marquee,.toolbar,#lb,.noise,.scrollcue,.modal,#toast{display:none!important}
+ .hero{min-height:auto;padding:40px 10mm 26mm;page-break-after:always}
+ .stats{margin-top:30px}
+ .chapter{padding:0 10mm 10mm}
+ .chhead{page-break-after:always;padding-top:8mm}
+ .grid{display:block;padding:0}
+ .card{page-break-after:always;break-inside:avoid;height:250mm;display:flex;flex-direction:column;opacity:1;transform:none}
+ .card .ph{flex:0 0 auto;height:228mm;border:none;background:none}
+ .card .ph img{width:100%;height:100%;object-fit:contain;transform:none!important}
+ .meta{padding-top:5mm}
+ footer{margin-top:0;padding:20mm 10mm;page-break-before:always}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+
+<nav class="topbar">
+  <div class="brand">PORTFOLIO<em>·</em>2026</div>
+  <div class="topnav">
+    <a href="#ch1">主图设计</a><a href="#ch2">智能教具</a><a href="#ch3">国潮 · IP</a><a href="#ch4">健康按摩</a><a href="#contact">联系</a>
+  </div>
+  <button id="editEntry">🔒 编辑</button>
+</nav>
+
+<header class="hero">
+  <p class="kicker" data-k="kicker" >E-COMMERCE VISUAL DESIGNER · 电商视觉设计</p>
+  <h1><span data-k="t1">电商视觉</span><span class="l2" data-k="t2">设计作品集</span></h1>
+  <p class="name" data-k="name">方佩萍 · 电商视觉设计师</p>
+  <p class="sub" data-k="sub">14 年电商视觉设计经验，跨照明家居、个护小家电、内衣、AI 智能玩具多类目，均为自有品牌全案设计。具备卖点提炼 → 视觉策划 → 拍摄落地全链路能力，熟练 AIGC 提效工作流。负责单品销量最高 2 万+，年度绩效排名 2/14。</p>
+  <div class="stats">
+    <div class="stat"><div class="n" data-k="s1n">14</div><div class="t" data-k="s1t">年电商视觉经验 EXPERIENCE</div></div>
+    <div class="stat"><div class="n" data-k="s2n">20</div><div class="t" data-k="s2t">精选作品 WORKS</div></div>
+    <div class="stat"><div class="n" data-k="s3n">2万+</div><div class="t" data-k="s3t">单品最高销量 BEST SELLER</div></div>
+    <div class="stat"><div class="n" data-k="s4n">2/14</div><div class="t" data-k="s4t">年度绩效排名 PERFORMANCE</div></div>
+  </div>
+  <div class="scrollcue">SCROLL ↓</div>
+</header>
+
+<div class="marquee"><div class="mtrack" id="mtrack"></div></div>
+
+<section class="profile">
+  <div class="pfwrap">
+    <div class="pflabel">PROFILE<span>个人简介</span></div>
+    <div>
+      <p class="pfbio" data-k="bio">14 年电商视觉设计经验，跨<b>照明家居、个护小家电、内衣、AI 智能玩具</b>多类目，均为<b>自有品牌全案设计</b>。具备卖点提炼 → 视觉策划 → 拍摄落地全链路能力，熟练 AIGC 提效工作流。负责单品销量最高 <b>2 万+</b>，年度绩效排名 <b>2/14</b>。</p>
+      <div class="pfchain">
+        <div class="pfstep"><div class="i">STEP 01</div><div class="t">卖点提炼</div><div class="d">从产品参数到用户语言，锁定第一眼要讲的利益点</div></div>
+        <div class="pfstep"><div class="i">STEP 02</div><div class="t">视觉策划</div><div class="d">定调性、定色系、定版式，搭建可复用的视觉体系</div></div>
+        <div class="pfstep"><div class="i">STEP 03</div><div class="t">拍摄落地</div><div class="d">跟拍、搭景、修图全流程把控，画面可控可交付</div></div>
+        <div class="pfstep"><div class="i">STEP 04</div><div class="t">AIGC 提效</div><div class="d">用生成式工具做场景延展与版本迭代，压缩出图周期</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="works"></main>
+
+<footer id="contact">
+  <div class="big" data-k="fbig">LET'S <em>TALK</em></div>
+  <div class="contact">
+    <div class="item"><div class="k">微信 WECHAT</div><div class="v" data-k="c1">15914364296（手机同号）</div></div>
+    <div class="item"><div class="k">电话 TEL</div><div class="v" data-k="c2">15914364296</div></div>
+    <div class="item"><div class="k">邮箱 EMAIL</div><div class="v" data-k="c3">470631853@qq.com</div></div>
+    <div class="item qr">
+      <div class="k">微信扫码 ADD ME</div>
+      <div class="qrbox"><img id="qrImg" alt="微信二维码">
+        <button id="qrReplace" class="qrb">更换二维码</button>
+      </div>
+    </div>
+  </div>
+  <div class="credit">
+    <span data-k="credit">© 2026 方佩萍 · 电商视觉设计作品集</span>
+    <span>ALL WORKS © ORIGINAL DESIGN — 请勿未经授权转载</span>
+  </div>
+</footer>
+
+<div id="lb">
+  <div class="lbbar"><button id="lbZoom">原始尺寸 1:1</button></div>
+  <button class="x" title="关闭">✕</button>
+  <button class="pv" title="上一张">‹</button>
+  <button class="nx" title="下一张">›</button>
+  <div class="lb-scroll"><img id="lbImg" alt=""></div>
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<div class="toolbar">
+  <span class="lead">✎ 编辑中</span>
+  <button id="btnExport">导出分享版 HTML</button>
+  <button id="btnPdf">导出 PDF（打印）</button>
+  <button id="btnPwd">修改密码</button>
+  <button id="btnReset" class="warn">重置修改</button>
+  <button id="btnExit">退出编辑</button>
+</div>
+
+<div class="modal" id="pwdModal">
+  <div class="mbox">
+    <h4>进入编辑模式</h4>
+    <p>请输入编辑密码。观看者无需密码，只能浏览作品，无法修改任何内容。</p>
+    <input type="password" id="pwdInput" placeholder="编辑密码" autocomplete="off">
+    <div class="mrow">
+      <button id="pwdCancel">取消</button>
+      <button id="pwdOk" class="ok">解锁编辑</button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="pwd2Modal">
+  <div class="mbox">
+    <h4>修改编辑密码</h4>
+    <p>密码仅保存在你本机浏览器中。新密码建议 6 位以上，含字母和数字。</p>
+    <input type="text" id="pwd2Input" placeholder="新密码" autocomplete="off">
+    <div class="mrow">
+      <button id="pwd2Cancel">取消</button>
+      <button id="pwd2Ok" class="ok">确认修改</button>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script id="works-data" type="application/json">[{"id": "w01", "ch": 1, "title": "主图设计合集 · 一", "desc": "智能教具类目主图矩阵：高饱和撞色与场景化摆拍，第一眼传达产品核心卖点。", "tags": ["主图矩阵", "智能教具"], "visible": true, "orig": "originals/w01.jpg", "thumb": "assets/w01_t.jpg", "img": "assets/w01_t.jpg"}, {"id": "w02", "ch": 1, "title": "主图设计合集 · 二", "desc": "儿童科普类目主图：蓝橙对比色系，道具氛围与使用场景营造点击欲望。", "tags": ["主图矩阵", "儿童科普"], "visible": true, "orig": "originals/w02.jpg", "thumb": "assets/w02_t.jpg", "img": "assets/w02_t.jpg"}, {"id": "w03", "ch": 1, "title": "主图设计合集 · 三", "desc": "按摩健康类目主图：柔光质感与粉调情绪表达，突出女性向视觉语言。", "tags": ["主图矩阵", "健康按摩"], "visible": true, "orig": "originals/w03.jpg", "thumb": "assets/w03_t.jpg", "img": "assets/w03_t.jpg"}, {"id": "w04", "ch": 1, "title": "主图设计合集 · 四", "desc": "IP 联名与按摩仪主图：差异化排版测试，强化品牌识别与转化入口。", "tags": ["主图矩阵", "IP联名"], "visible": true, "orig": "originals/w04.jpg", "thumb": "assets/w04_t.jpg", "img": "assets/w04_t.jpg"}, {"id": "w05", "ch": 1, "title": "主图设计合集 · 五", "desc": "熊猫 IP 与礼赠场景主图：暖色系转化型表达，适配大促与节日氛围。", "tags": ["主图矩阵", "礼赠场景"], "visible": true, "orig": "originals/w05.jpg", "thumb": "assets/w05_t.jpg", "img": "assets/w05_t.jpg"}, {"id": "w06", "ch": 2, "title": "AI智能触屏地球仪", "desc": "深空蓝科技风详情页：AR 触屏功能点拆解，星空场景渲染营造探索感。", "tags": ["详情页", "科技暗色"], "visible": true, "orig": "originals/w06.jpg", "thumb": "assets/w06_t.jpg", "img": "assets/w06_t.jpg"}, {"id": "w07", "ch": 2, "title": "AI萌宠磁悬浮地球仪", "desc": "樱花粉萌系详情页：萌兔 IP × 磁悬浮科技，7 大 VR 主题与亲子互动场景叙事。", "tags": ["详情页", "樱花粉"], "visible": true, "orig": "originals/w07.jpg", "thumb": "assets/w07_t.jpg", "img": "assets/w07_t.jpg"}, {"id": "w08", "ch": 2, "title": "AI绘画板", "desc": "暖调教育感详情页：真实使用场景与儿童成长叙事，无屏护眼与创造力的平衡。", "tags": ["详情页", "教育暖调"], "visible": true, "orig": "originals/w08.jpg", "thumb": "assets/w08_t.jpg", "img": "assets/w08_t.jpg"}, {"id": "w09", "ch": 2, "title": "入门级天文望远镜", "desc": "暗夜星空主题详情页：参数可视化与观星场景大片，专业感与入门友好并存。", "tags": ["详情页", "星空暗调"], "visible": true, "orig": "originals/w09.jpg", "thumb": "assets/w09_t.jpg", "img": "assets/w09_t.jpg"}, {"id": "w10", "ch": 3, "title": "上新了故宫首饰立柜", "desc": "国潮红金配色详情页：中式纹样与宫廷质感，把首饰收纳做成文化礼赠。", "tags": ["详情页", "国潮红金"], "visible": true, "orig": "originals/w10.jpg", "thumb": "assets/w10_t.jpg", "img": "assets/w10_t.jpg"}, {"id": "w11", "ch": 3, "title": "山茶花水晶灯", "desc": "新中式奶油风详情页：东方美学与灯光氛围结合，材质细节高级呈现。", "tags": ["详情页", "新中式"], "visible": true, "orig": "originals/w11.jpg", "thumb": "assets/w11_t.jpg", "img": "assets/w11_t.jpg"}, {"id": "w12", "ch": 3, "title": "冰雪奇缘水晶球", "desc": "迪士尼 IP 授权详情页：冰雪蓝梦幻氛围，IP 情绪与产品细节双线并进。", "tags": ["详情页", "梦幻蓝"], "visible": true, "orig": "originals/w12.jpg", "thumb": "assets/w12_t.jpg", "img": "assets/w12_t.jpg"}, {"id": "w13", "ch": 3, "title": "史迪仔眼部按摩仪", "desc": "IP 联名详情页：史迪仔 IP 气质与硬核按摩参数的平衡表达。", "tags": ["详情页", "IP联名"], "visible": true, "orig": "originals/w13.jpg", "thumb": "assets/w13_t.jpg", "img": "assets/w13_t.jpg"}, {"id": "w14", "ch": 3, "title": "迪士尼U型枕", "desc": "粉紫柔雾色调详情页：IP 情绪价值 + 人体工学卖点，通勤与礼赠双场景。", "tags": ["详情页", "粉紫柔雾"], "visible": true, "orig": "originals/w14.jpg", "thumb": "assets/w14_t.jpg", "img": "assets/w14_t.jpg"}, {"id": "w15", "ch": 4, "title": "智能润眼按摩仪K5", "desc": "莫兰迪紫净版排版详情页：功能图标化表达，医研感与轻盈感并存。", "tags": ["详情页", "莫兰迪紫"], "visible": true, "orig": "originals/w15.jpg", "thumb": "assets/w15_t.jpg", "img": "assets/w15_t.jpg"}, {"id": "w16", "ch": 4, "title": "儿童智能护眼精灵", "desc": "粉色儿童护眼按摩仪详情页：真人使用场景与功能拆解并重，从妈妈视角建立信任感。", "tags": ["详情页", "儿童粉调"], "visible": true, "orig": "originals/w16.jpg", "thumb": "assets/w16_t.jpg", "img": "assets/w16_t.jpg"}, {"id": "w17", "ch": 4, "title": "眼部按摩仪TK-01", "desc": "深蓝金属质感详情页：运动与科技感拉满，系列化视觉语言。", "tags": ["详情页", "金属深蓝"], "visible": true, "orig": "originals/w17.jpg", "thumb": "assets/w17_t.jpg", "img": "assets/w17_t.jpg"}, {"id": "w18", "ch": 4, "title": "熊猫颈椎按摩仪F6", "desc": "清新绿健康系详情页：卖点九宫格与真人实测，亲切且有说服力。", "tags": ["详情页", "清新绿"], "visible": true, "orig": "originals/w18.jpg", "thumb": "assets/w18_t.jpg", "img": "assets/w18_t.jpg"}, {"id": "w19", "ch": 4, "title": "热敷熊猫靠枕", "desc": "奶油棕治愈系详情页：使用场景剧情化，把热敷体验做成情绪价值。", "tags": ["详情页", "奶油棕"], "visible": true, "orig": "originals/w19.jpg", "thumb": "assets/w19_t.jpg", "img": "assets/w19_t.jpg"}, {"id": "w20", "ch": 4, "title": "熊猫款暖宫宝OP4", "desc": "清新绿治愈系详情页：暖宫护理场景叙事，柔光质感与功能分区清晰。", "tags": ["详情页", "清新绿"], "visible": true, "orig": "originals/w20.jpg", "thumb": "assets/w20_t.jpg", "img": "assets/w20_t.jpg"}]</script>
+<script>
+/* debug helper: ?scroll=NN jumps to position */
+try{ const sp=new URLSearchParams(location.search).get('scroll'); if(sp) addEventListener('load',()=>window.scrollTo(0,+sp)) }catch(e){}
+
+/* ============ config ============ */
+const DEFAULT_HASH = "h4172057850";
+const VIEWER_ONLY = false;
+const LS = 'pf2026_edits_v2';
+let edits = {};
+try{ edits = JSON.parse(localStorage.getItem(LS)||'{}') }catch(e){ edits = {} }
+const save = () => localStorage.setItem(LS, JSON.stringify(edits));
+const QR_B64 = "assets/qr.jpg";
+if(QR_B64) document.addEventListener('DOMContentLoaded', ()=>{ document.getElementById('qrImg').src = (edits.qr||QR_B64) });
+function hash(s){ let h=5381; for(let i=0;i<s.length;i++){ h=((h*33)^s.charCodeAt(i))>>>0 } return 'h'+h }
+
+const RAW = JSON.parse(document.getElementById('works-data').textContent);
+const CHAPTERS = [
+ {no:'01',id:'ch1',cn:'主图设计',en:'MAIN VISUALS',intro:'五组主图矩阵，覆盖智能教具、健康按摩、IP 联名三大类目——以点击率为导向的封面级视觉表达，一张主图讲清一个卖点。'},
+ {no:'02',id:'ch2',cn:'智能教具 · 科技',en:'SMART TECH & EDUCATION',intro:'AI 智能教具与天文品类详情页：暗色科技风与教育暖调并行，参数可视化、沉浸式场景与功能叙事并重。'},
+ {no:'03',id:'ch3',cn:'国潮 · IP · 家居',en:'CULTURE × IP',intro:'「上新了故宫」、迪士尼、史迪仔等 IP 联名与新中式家居视觉——文化符号与商业转化之间的平衡术。'},
+ {no:'04',id:'ch4',cn:'健康按摩',en:'WELLNESS TECH',intro:'按摩健康类目的系统化视觉：从玫瑰粉到莫兰迪绿，多风格情绪体系，卖点结构化、场景剧情化的详情页表达。'}
+];
+const MarqWords = ['主图设计','详情页策划','IP 联名视觉','转化率优化','E-COMMERCE VISUAL','品牌视觉升级'];
+
+/* ============ helpers ============ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const pad2 = n => String(n).padStart(2,'0');
+const eff = (w,f) => { const v = edits.t && edits.t['w.'+w.id+'.'+f]; return v===undefined ? w[f] : v };
+const imgOf = w => (edits.img && edits.img[w.id]) || w.img;
+const thumbOf = w => (edits.img && edits.img[w.id]) || w.thumb;
+const visibleOf = w => { const h = edits.hid && edits.hid[w.id]; return h===undefined ? w.visible : !h };
+let toastTimer;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200) }
+
+/* ============ marquee ============ */
+(()=>{ let h=''; for(let r=0;r<2;r++) MarqWords.forEach((w,i)=>{ h+=`<span>${w}</span><i>✦</i>` }); $('#mtrack').innerHTML=h })();
+
+/* ============ render ============ */
+function render(){
+  const main=$('#works'); let html=''; let no=0;
+  CHAPTERS.forEach((c,ci)=>{
+    const works = RAW.filter(w=>w.ch===ci+1);
+    html += `<section class="chapter" id="${c.id}">
+      <div class="chhead">
+        <div class="chno">${c.no}</div>
+        <div class="chmeta"><h2 data-k="ch${ci+1}.cn">${c.cn}</h2><div class="en" data-k="ch${ci+1}.en">${c.en}</div></div>
+        <div class="chintro" data-k="ch${ci+1}.intro">${c.intro}</div>
+      </div><div class="grid">`;
+    works.forEach(w=>{
+      if(!visibleOf(w)) return;
+      no++;
+      html += `<article class="card" data-id="${w.id}">
+        <div class="cardno">No.${pad2(no)}</div>
+        <div class="ph"><img loading="lazy" src="${thumbOf(w)}" data-full="${imgOf(w)}" alt="${eff(w,'title')}">
+          <div class="ops">
+            <button class="ghost" data-act="img">更换图片</button>
+            <button class="ghost" data-act="hide">${'隐藏'}</button>
+          </div>
+        </div>
+        <div class="meta">
+          <h3 data-k="w.${w.id}.title" contenteditable="false">${eff(w,'title')}</h3>
+          <p data-k="w.${w.id}.desc" contenteditable="false">${eff(w,'desc')}</p>
+          <div class="tags">${(w.tags||[]).map(t=>`<span>${t}</span>`).join('')}</div>
+        </div>
+      </article>`;
+    });
+    html += `</div></section>`;
+  });
+  main.innerHTML = html;
+  requestAnimationFrame(()=> $$('.card').forEach((c,i)=> setTimeout(()=>c.classList.add('in'), 60*i)));
+}
+render();
+
+/* ============ static text edits ============ */
+function applyStatic(){
+  $$('[data-k]').forEach(el=>{
+    const k = el.getAttribute('data-k');
+    if(k.startsWith('w.')||k.startsWith('ch')) return; // rendered dynamically (ch handled below)
+    if(edits.t && edits.t[k]!==undefined && !el.querySelector('[data-k]')) el.textContent = edits.t[k];
+  });
+}
+function applyChapters(){
+  CHAPTERS.forEach((c,i)=>{
+    const cn=document.querySelector(`[data-k="ch${i+1}.cn"]`), en=document.querySelector(`[data-k="ch${i+1}.en"]`), it=document.querySelector(`[data-k="ch${i+1}.intro"]`);
+    if(!cn) return;
+    if(edits.t){ if(edits.t['ch'+(i+1)+'.cn']!==undefined) cn.textContent=edits.t['ch'+(i+1)+'.cn'];
+      if(edits.t['ch'+(i+1)+'.en']!==undefined) en.textContent=edits.t['ch'+(i+1)+'.en'];
+      if(edits.t['ch'+(i+1)+'.intro']!==undefined) it.textContent=edits.t['ch'+(i+1)+'.intro']; }
+  });
+}
+applyStatic(); applyChapters();
+
+/* ============ reveal observer ============ */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target)} }),{threshold:.08});
+$$('.card:not(.in)').forEach(c=>io.observe(c));
+
+/* ============ lightbox ============ */
+const lb=$('#lb'), lbImg=$('#lbImg'), lbCap=$('#lbCap');
+let lbList=[], lbIdx=0;
+function openLb(id){
+  lbList = RAW.filter(visibleOf);
+  lbIdx = lbList.findIndex(w=>w.id===id); if(lbIdx<0) return;
+  showLb(); lb.classList.add('open'); document.body.style.overflow='hidden';
+}
+function showLb(){
+  const w = lbList[lbIdx];
+  lb.classList.add('actual'); $('#lbZoom').textContent = '适应宽度';
+  const fallback = imgOf(w);
+  lbImg.onerror = () => { lbImg.onerror=null; if(lbImg.src !== fallback) lbImg.src = fallback };
+  lbImg.src = (edits.img && edits.img[w.id]) ? fallback : (w.orig || fallback);
+  lbCap.innerHTML = `<b>No.${pad2(lbIdx+1)} ${eff(w,'title')}</b> — ${eff(w,'desc')}　·　滚动查看完整长图`;
+}
+$('#lbZoom').onclick = ()=>{
+  const on = lb.classList.toggle('actual');
+  $('#lbZoom').textContent = on ? '适应宽度' : '原始尺寸 1:1';
+};
+function closeLb(){ lb.classList.remove('open'); document.body.style.overflow='' }
+function navLb(d){ lbIdx=(lbIdx+d+lbList.length)%lbList.length; lbList[lbIdx] && (lb.querySelector('.lb-scroll').scrollTop=0, showLb()) }
+$('#works').addEventListener('click',e=>{
+  const card = e.target.closest('.card'); if(!card) return;
+  const act = e.target.closest('[data-act]');
+  if(act && document.body.classList.contains('editing')){
+    const id = card.dataset.id;
+    if(act.dataset.act==='img'){ pickImage(id); }
+    if(act.dataset.act==='hide'){ edits.hid = edits.hid||{}; edits.hid[id]=!visibleOf(RAW.find(w=>w.id===id)); save(); render(); applyChapters(); toast(edits.hid[id]?'已隐藏该作品':'已重新展示该作品'); }
+    return;
+  }
+  if(e.target.closest('.ph')) openLb(card.dataset.id);
+});
+lb.querySelector('.x').onclick=closeLb;
+lb.querySelector('.pv').onclick=()=>navLb(-1);
+lb.querySelector('.nx').onclick=()=>navLb(1);
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLb();
+  if(e.key==='ArrowLeft') navLb(-1);
+  if(e.key==='ArrowRight') navLb(1);
+});
+
+/* ============ editing ============ */
+const editing = () => document.body.classList.contains('editing');
+function setEditing(on){
+  document.body.classList.toggle('editing',on);
+  $$('[data-k]').forEach(el=>el.setAttribute('contenteditable', on?'true':'false'));
+  if(!on) return;
+  toast('已进入编辑模式：点击文字直接改，卡片上可换图/隐藏');
+}
+let debTimer;
+document.addEventListener('input',e=>{
+  const el = e.target.closest('[data-k]'); if(!el||!editing()) return;
+  const k = el.getAttribute('data-k');
+  edits.t = edits.t||{}; edits.t[k]=el.innerText.trim();
+  clearTimeout(debTimer); debTimer=setTimeout(()=>{ save(); },400);
+});
+
+/* password */
+function currentHash(){ return (edits.pwd||DEFAULT_HASH) }
+$('#editEntry').onclick = ()=>{
+  if(VIEWER_ONLY){ alert('此为分享版，仅支持浏览。'); return }
+  $('#pwdModal').classList.add('open'); $('#pwdInput').value=''; $('#pwdInput').focus();
+};
+$('#pwdCancel').onclick = ()=> $('#pwdModal').classList.remove('open');
+$('#pwdOk').onclick = ()=>{
+  if(hash($('#pwdInput').value)===currentHash()){
+    $('#pwdModal').classList.remove('open'); setEditing(true);
+  } else { $('#pwdInput').value=''; toast('密码不正确'); }
+};
+$('#pwdInput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#pwdOk').click() });
+$('#btnExit').onclick = ()=> setEditing(false);
+$('#btnPwd').onclick = ()=>{ $('#pwd2Modal').classList.add('open'); $('#pwd2Input').value='' };
+$('#pwd2Cancel').onclick = ()=> $('#pwd2Modal').classList.remove('open');
+$('#pwd2Ok').onclick = ()=>{
+  const v = $('#pwd2Input').value.trim();
+  if(v.length<4){ toast('密码至少 4 位'); return }
+  edits.pwd = hash(v); save(); $('#pwd2Modal').classList.remove('open'); toast('密码已更新（仅保存在本机）');
+};
+/* reset via URL param when locked out */
+if(new URLSearchParams(location.search).has('reset')){ delete edits.pwd; save(); }
+
+/* image replace (works & QR) */
+let pickId=null, qrMode=false;
+const fileInput = document.createElement('input'); fileInput.type='file'; fileInput.accept='image/*';
+fileInput.onchange = ()=>{
+  const f=fileInput.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload = ()=>{
+    if(qrMode){ edits.qr=r.result; save(); document.getElementById('qrImg').src=r.result; toast('二维码已更换'); return }
+    edits.img=edits.img||{}; edits.img[pickId]=r.result; save(); render(); applyChapters(); toast('图片已更换并保存');
+  };
+  r.readAsDataURL(f);
+};
+function pickImage(id){ pickId=id; qrMode=false; fileInput.click(); }
+$('#qrReplace').onclick = ()=>{ qrMode=true; fileInput.click(); };
+
+/* reset edits */
+$('#btnReset').onclick = ()=>{ if(confirm('确定清除全部修改（文案/图片/隐藏/密码），恢复初始状态？')){ localStorage.removeItem(LS); location.href=location.pathname; } };
+
+/* export standalone share version */
+$('#btnExport').onclick = ()=>{
+  toast('正在生成分享版…');
+  setTimeout(()=>{
+    const wasEditing = editing(); if(wasEditing) setEditing(false);
+    const data = RAW.map(w=>({...w, visible: visibleOf(w), img: imgOf(w)}));
+    const clone = document.documentElement.cloneNode(true);
+    clone.querySelector('#works-data').textContent = JSON.stringify(data);
+    const flag = document.createElement('script'); flag.textContent='window.VIEWER_ONLY=true';
+    clone.querySelector('body').appendChild(flag);
+    const html = '<!doctype html>\n'+clone.outerHTML;
+    const blob = new Blob([html],{type:'text/html;charset=utf-8'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='电商视觉作品集-分享版.html'; a.click(); URL.revokeObjectURL(a.href);
+    if(wasEditing) setEditing(true);
+    toast('分享版已导出：单个 HTML 文件，接收方只能浏览');
+  },100);
+};
+$('#btnPdf').onclick = ()=>{ toast('在打印窗口中：目标选「另存为 PDF」，并勾选「背景图形」'); setTimeout(()=>window.print(),600); };
+</script>
+</body>
+</html>
