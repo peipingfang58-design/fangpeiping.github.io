@@ -264,11 +264,20 @@ footer .big em{color:var(--acc);-webkit-text-stroke:0;font-style:normal}
 .credit{margin-top:70px;display:flex;justify-content:space-between;color:#5b5b60;font-size:12px;letter-spacing:.08em;flex-wrap:wrap;gap:10px}
 
 /* ---------- lightbox ---------- */
-#lb{position:fixed;inset:0;z-index:80;background:rgba(8,8,10,.96);display:none}
+#lb{position:fixed;inset:0;z-index:80;background:#08080a;display:none}
 #lb.open{display:block}
 .lb-scroll{position:absolute;inset:0;overflow:auto;padding:70px 20px 90px;text-align:center;scrollbar-gutter:stable both-edges}
 .lb-scroll img{display:block;margin:0 auto;width:min(90vw,1120px);max-width:100%;height:auto;border:1px solid var(--line)}
 #lb.actual .lb-scroll img{width:auto;max-width:none;border:none}
+/* 低清占位图与大图等比例，切换零跳动；1:1 模式下也保持同样显示宽度 */
+.lb-scroll img.preview,#lb.actual .lb-scroll img.preview{width:min(90vw,1120px);max-width:100%;height:auto}
+#lbLoad{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:83;display:none;
+ align-items:center;gap:8px;padding:8px 16px;border-radius:99px;background:#000b;
+ border:1px solid var(--line);color:var(--mut);font-size:12px;font-family:var(--cn);
+ letter-spacing:.03em;pointer-events:none;white-space:nowrap}
+#lbLoad.show{display:flex}
+#lbLoad i{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:lbpulse 1s infinite}
+@keyframes lbpulse{0%,100%{opacity:.25}50%{opacity:1}}
 .lbbar{position:fixed;top:18px;left:20px;z-index:82;display:flex;gap:10px;align-items:center}
 .lbbar button{background:#000a;border:1px solid var(--line);color:var(--mut);font-size:12.5px;padding:8px 15px;border-radius:99px;cursor:pointer;font-family:var(--cn);transition:.2s}
 .lbbar button:hover,#lb.actual .lbbar button{border-color:var(--acc);color:var(--acc)}
@@ -516,7 +525,8 @@ AIGC 工作流：场景图生成 · 风格延展 · 版本迭代 · 人工精修
   <button class="x" title="关闭">✕</button>
   <button class="pv" title="上一张">‹</button>
   <button class="nx" title="下一张">›</button>
-  <div class="lb-scroll"><img id="lbImg" alt=""></div>
+  <div id="lbLoad"><i></i>高清大图加载中…</div>
+  <div class="lb-scroll"><img id="lbImg" alt="" decoding="sync"></div>
   <div class="lb-cap" id="lbCap"></div>
 </div>
 
@@ -652,9 +662,10 @@ const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){e.t
 $$('.card:not(.in)').forEach(c=>io.observe(c));
 
 /* ============ lightbox ============ */
-const lb=$('#lb'), lbImg=$('#lbImg'), lbCap=$('#lbCap');
-let lbList=[], lbIdx=0;
+const lb=$('#lb'), lbImg=$('#lbImg'), lbCap=$('#lbCap'), lbLoad=$('#lbLoad');
+let lbList=[], lbIdx=0, lbToken=0, lbCurId='';
 const lbScroll = lb.querySelector('.lb-scroll');
+const prefetched = new Set();
 function resetLbScroll(){ lbScroll.scrollTop = 0; lbScroll.scrollLeft = 0 }
 function centerIfWide(){ if(lbScroll.scrollWidth > lbScroll.clientWidth) lbScroll.scrollLeft = (lbScroll.scrollWidth - lbScroll.clientWidth)/2 }
 function setLbZoom(on){
@@ -662,28 +673,66 @@ function setLbZoom(on){
   $('#lbZoom').textContent = on ? '适应宽度' : '原始尺寸 1:1';
   requestAnimationFrame(()=>{ resetLbScroll(); if(on) centerIfWide() });
 }
+const fullOf = w => (edits.img && edits.img[w.id]) ? imgOf(w) : (w.orig || imgOf(w));
+function prefetch(i){
+  if(!lbList.length) return;
+  const w = lbList[(i+lbList.length)%lbList.length]; if(!w) return;
+  // 低清占位 + 高清都提前备好，翻页时两者都能秒开
+  [thumbOf(w), fullOf(w)].forEach(u=>{
+    if(!u || prefetched.has(u)) return;
+    prefetched.add(u);
+    const p = new Image(); p.decoding='async'; p.src = u;
+  });
+}
+function showLbLoad(on){ lbLoad.classList.toggle('show', !!on) }
 function openLb(id){
   lbList = RAW.filter(visibleOf);
-  lbIdx = lbList.findIndex(w=>w.id===id); if(lbIdx<0) return;
+  const idx = lbList.findIndex(w=>w.id===id); if(idx<0) return;
+  // 已经打开且就是这一张：不做任何重载，避免重复点击造成闪烁或回到顶部
+  if(lb.classList.contains('open') && lbCurId===id) return;
+  lbIdx = idx;
+  lb.classList.add('open');            // 先让灯箱可见，图片在可见状态下加载
+  document.body.style.overflow='hidden';
   setLbZoom(false);
-  showLb(); lb.classList.add('open'); document.body.style.overflow='hidden';
+  showLb();
   resetLbScroll();
 }
 function showLb(){
-  const w = lbList[lbIdx];
-  const fallback = imgOf(w);
-  lbImg.onerror = () => { lbImg.onerror=null; if(lbImg.src !== fallback) lbImg.src = fallback };
-  lbImg.src = (edits.img && edits.img[w.id]) ? fallback : (w.orig || fallback);
+  const w = lbList[lbIdx]; if(!w) return;
+  const token = ++lbToken;            // 快速切换时丢弃迟到的旧图
+  const thumb = thumbOf(w), full = fullOf(w);
+  lbCurId = w.id;
   lbCap.innerHTML = `<b>No.${pad2(lbIdx+1)} ${eff(w,'title')}</b> — ${eff(w,'desc')}　·　滚动查看完整长图`;
+  // 1) 立刻显示「这一张」的低清占位：缩略图与大图同比例且卡片上已缓存，
+  //    绝不会残留上一张，也不会出现空白等待
+  lbImg.classList.add('preview');
+  lbImg.onerror = ()=>{ if(token===lbToken){ lbImg.classList.remove('preview'); showLbLoad(false) } };
+  lbImg.src = thumb;
   resetLbScroll();
+  if(full === thumb){ showLbLoad(false); return }
+  // 2) 后台完整解码高清图，ready 后一次替换，无渐进式模糊帧、无空窗
+  showLbLoad(true);
+  const hi = new Image(); hi.decoding='async';
+  const done = ()=>{
+    if(token!==lbToken) return;
+    lbImg.onerror = null;
+    lbImg.src = full;
+    lbImg.classList.remove('preview');
+    showLbLoad(false);
+    requestAnimationFrame(()=>{ if(lb.classList.contains('actual')) centerIfWide() });
+  };
+  hi.onload = ()=>{ if(hi.decode) hi.decode().then(done, done); else done() };
+  hi.onerror = ()=>{ if(token===lbToken) showLbLoad(false) };  // 失败就保留占位图
+  hi.src = full;
+  // 3) 顺手把前后两张塞进缓存，翻页基本秒开
+  setTimeout(()=>{ if(token===lbToken){ prefetch(lbIdx-1); prefetch(lbIdx+1) } }, 350);
 }
 lbImg.addEventListener('load', ()=>{
-  resetLbScroll();
-  if(lb.classList.contains('actual')) centerIfWide();
+  if(lbImg.classList.contains('preview')) resetLbScroll();
 });
 $('#lbZoom').onclick = ()=> setLbZoom(!lb.classList.contains('actual'));
-function closeLb(){ lb.classList.remove('open'); document.body.style.overflow='' }
-function navLb(d){ lbIdx=(lbIdx+d+lbList.length)%lbList.length; if(lbList[lbIdx]) showLb() }
+function closeLb(){ lbToken++; lb.classList.remove('open'); showLbLoad(false); document.body.style.overflow='' }
+function navLb(d){ if(!lbList.length) return; lbIdx=(lbIdx+d+lbList.length)%lbList.length; if(lbList[lbIdx]) showLb() }
 $('#works').addEventListener('click',e=>{
   const card = e.target.closest('.card'); if(!card) return;
   const act = e.target.closest('[data-act]');
